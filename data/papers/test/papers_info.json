@@ -1,0 +1,24 @@
+{
+  "1912.09881v1": {
+    "title": "Morphy: A Datamorphic Software Test Automation Tool",
+    "authors": [
+      "Hong Zhu",
+      "Ian Bayley",
+      "Dongmei Liu",
+      "Xiaoyu Zheng"
+    ],
+    "summary": "This paper presents an automated tool called Morphy for datamorphic testing.\nIt classifies software test artefacts into test entities and test morphisms,\nwhich are mappings on testing entities. In addition to datamorphisms,\nmetamorphisms and seed test case makers, Morphy also employs a set of other\ntest morphisms including test case metrics and filters, test set metrics and\nfilters, test result analysers and test executers to realise test automation.\nIn particular, basic testing activities can be automated by invoking test\nmorphisms. Test strategies can be realised as complex combinations of test\nmorphisms. Test processes can be automated by recording, editing and playing\ntest scripts that invoke test morphisms and strategies. Three types of test\nstrategies have been implemented in Morphy: datamorphism combination\nstrategies, cluster border exploration strategies and strategies for test set\noptimisation via genetic algorithms. This paper focuses on the datamorphism\ncombination strategies by giving their definitions and implementation\nalgorithms. The paper also illustrates their uses for testing both traditional\nsoftware and AI applications with three case studies.",
+    "pdf_url": "http://arxiv.org/pdf/1912.09881v1",
+    "published": "2019-12-20"
+  },
+  "1802.07361v1": {
+    "title": "Fault Detection Effectiveness of Source Test Case Generation Strategies for Metamorphic Testing",
+    "authors": [
+      "Prashanta Saha",
+      "Upulee Kanewala"
+    ],
+    "summary": "Metamorphic testing is a well known approach to tackle the oracle problem in\nsoftware testing. This technique requires the use of source test cases that\nserve as seeds for the generation of follow-up test cases. Systematic design of\ntest cases is crucial for the test quality. Thus, source test case generation\nstrategy can make a big impact on the fault detection effectiveness of\nmetamorphic testing. Most of the previous studies on metamorphic testing have\nused either random test data or existing test cases as source test cases. There\nhas been limited research done on systematic source test case generation for\nmetamorphic testing. This paper provides a comprehensive evaluation on the\nimpact of source test case generation techniques on the fault finding\neffectiveness of metamorphic testing. We evaluated the effectiveness of line\ncoverage, branch coverage, weak mutation and random test generation strategies\nfor source test case generation. The experiments are conducted with 77 methods\nfrom 4 open source code repositories. Our results show that by systematically\ncreating source test cases, we can significantly increase the fault finding\neffectiveness of metamorphic testing. Further, in this paper we introduce a\nsimple metamorphic testing tool called \"METtester\" that we use to conduct\nmetamorphic testing on these methods.",
+    "pdf_url": "http://arxiv.org/pdf/1802.07361v1",
+    "published": "2018-02-20"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "1802.03292v1": {
+    "title": "Mathematical Logic in Computer Science",
+    "authors": [
+      "Assaf Kfoury"
+    ],
+    "summary": "The article retraces major events and milestones in the mutual influences\nbetween mathematical logic and computer science since the 1950s.",
+    "pdf_url": "http://arxiv.org/pdf/1802.03292v1",
+    "published": "2018-02-07"
+  },
+  "1501.05039v1": {
+    "title": "Defining Data Science",
+    "authors": [
+      "Yangyong Zhu",
+      "Yun Xiong"
+    ],
+    "summary": "Data science is gaining more and more and widespread attention, but no\nconsensus viewpoint on what data science is has emerged. As a new science, its\nobjects of study and scientific issues should not be covered by established\nsciences. Data in cyberspace have formed what we call datanature. In the\npresent paper, data science is defined as the science of exploring datanature.",
+    "pdf_url": "http://arxiv.org/pdf/1501.05039v1",
+    "published": "2015-01-21"
+  },
+  "2002.05658v1": {
+    "title": "Ten Research Challenge Areas in Data Science",
+    "authors": [
+      "Jeannette M. Wing"
+    ],
+    "summary": "Although data science builds on knowledge from computer science, mathematics,\nstatistics, and other disciplines, data science is a unique field with many\nmysteries to unlock: challenging scientific questions and pressing questions of\nsocietal importance. This article starts with meta-questions about data science\nas a discipline and then elaborates on ten ideas for the basis of a research\nagenda for data science.",
+    "pdf_url": "http://arxiv.org/pdf/2002.05658v1",
+    "published": "2020-01-27"
+  },
+  "2205.01553v1": {
+    "title": "Why The Trans Programmer?",
+    "authors": [
+      "Skye Kychenthal"
+    ],
+    "summary": "Through online anecdotal evidence and online communities, there is an\nin-group idea of trans people (specifically trans-feminine individuals)\ndisproportionately entering computer science education & fields. Existing data\nsuggests this is a plausible trend, yet no research has been done into exactly\nwhy. As computer science education (traditional schooling or self-taught\nmethods) is integral to working in computer science fields, a simple research\nsurvey was conducted to gather data on 138 trans people's experiences with\ncomputer science & computer science education. This article's purpose is to\nshed insight on the motivations for trans individuals choosing computer science\npaths, while acting as a basis and call to action for further research.",
+    "pdf_url": "http://arxiv.org/pdf/2205.01553v1",
+    "published": "2022-05-03"
+  },
+  "1612.04037v1": {
+    "title": "Proceedings 11th Doctoral Workshop on Mathematical and Engineering Methods in Computer Science",
+    "authors": [
+      "Jan Bouda",
+      "Luk\u00e1\u0161 Hol\u00edk",
+      "Jan Kofro\u0148",
+      "Jan Strej\u010dek",
+      "Adam Rambousek"
+    ],
+    "summary": "MEMICS provides a forum for doctoral students interested in applications of\nmathematical and engineering methods in computer science. Besides a rich\ntechnical programme (including invited talks, regular papers, and\npresentations), MEMICS also offers friendly social activities and exciting\nopportunities for meeting like-minded people. MEMICS submissions traditionally\ncover all areas of computer science (such as parallel and distributed\ncomputing, computer networks, modern hardware and its design, non-traditional\ncomputing architectures, information systems and databases, multimedia and\ngraphics, verification and testing, computer security, as well as all related\nareas of theoretical computer science).",
+    "pdf_url": "http://arxiv.org/pdf/1612.04037v1",
+    "published": "2016-12-13"
+  }
+}

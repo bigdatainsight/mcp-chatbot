@@ -1,0 +1,43 @@
+[project]
+name = "mcp-chatbot"
+version = "0.1.0"
+description = "MCP Chatbot for arXiv paper search and analysis"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "arxiv",
+    "python-dotenv",
+    "anthropic",
+    "openai",
+    "google-generativeai"
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-mock", "mypy", "types-requests"]
+
+[project.scripts]
+mcp-chatbot = "mcp_chatbot.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+# Disable strict typing for now
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-mock>=3.15.1",
+]
