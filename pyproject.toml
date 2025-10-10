@@ -9,7 +9,8 @@ dependencies = [
     "python-dotenv",
     "anthropic",
     "openai",
-    "google-generativeai"
+    "google-generativeai",
+    "mcp"
 ]
 
 [project.optional-dependencies]
