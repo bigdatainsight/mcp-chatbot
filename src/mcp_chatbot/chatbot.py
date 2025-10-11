@@ -156,7 +156,7 @@ class MCP_Chatbot:
                 elif key not in ["default", "title"]:
                     cleaned[key] = value
             return cleaned
-        
+
         gemini_tools = [{
             "function_declarations": [{
                 "name": tool["name"],
@@ -164,7 +164,7 @@ class MCP_Chatbot:
                 "parameters": clean_schema(tool["input_schema"])
             } for tool in self.available_tools]
         }]
-        
+
         response = self.gemini_client.generate_content(
             query,
             tools=gemini_tools
@@ -222,7 +222,7 @@ class MCP_Chatbot:
         server_params = StdioServerParameters(
             command="uv",  # Executable
             # Optional command line arguments
-            args=["run", "python", "-m", "mcp_chatbot.tools"],
+            args=["run", "python", "-m", "mcp_chatbot.research_mcp_server"],
             env=None,  # Optional environment variables
         )
 
