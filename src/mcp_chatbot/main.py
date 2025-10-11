@@ -1,11 +1,19 @@
 """Main entry point for the MCP chatbot."""
 
-from .chatbot import chat_loop
+import asyncio
+from .chatbot import MCP_Chatbot
 
-def main():
+
+async def cli():
     """Main function to run the chatbot."""
     # Example usage
-    chat_loop()
+    chatbot = MCP_Chatbot()
+    await chatbot.connect_to_server_and_run()
+
+
+def main():
+    """Entry point for the CLI script."""
+    asyncio.run(cli())
 
 if __name__ == "__main__":
     main()

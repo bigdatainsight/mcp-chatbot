@@ -54,13 +54,39 @@ ANTHROPIC_MODEL=claude-3-7-sonnet-20250219
 
 Run the chatbot:
 ```bash
+# Using the script entry point (recommended)
 uv run mcp-chatbot
+
+# Using the module directly
+uv run python -m mcp_chatbot.main
+
+# Or from the project root
+uv run python src/mcp_chatbot/main.py
+
 ```
 
 Example queries:
 - "Find some computer science papers about machine learning"
 - "Search for papers on quantum computing"
 - "Get information about paper 2301.12345"
+
+## MCP Server
+
+The `tools.py` file also functions as a **Model Context Protocol (MCP) server**, allowing the tools to be used by MCP-compatible clients.
+
+### Running the MCP Server
+
+To run and inspect the MCP server:
+
+```bash
+pkill -f "inspector" && sleep 2 && npx @modelcontextprotocol/inspector uv run python -m mcp_chatbot.tools
+```
+
+This will:
+- Start the MCP server
+- Open the MCP Inspector in your browser
+- Allow you to test the tools interactively
+- View tool schemas and responses
 
 ## Available Tools
 
