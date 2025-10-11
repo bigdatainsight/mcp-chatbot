@@ -7,7 +7,7 @@ import asyncio
 import nest_asyncio
 import os
 import json
-from .tools import execute_tool
+from .research_mcp_server import execute_tool
 
 nest_asyncio.apply()
 
