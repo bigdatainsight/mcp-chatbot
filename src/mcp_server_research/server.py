@@ -4,7 +4,7 @@ import json
 import os
 from typing import List
 from dotenv import load_dotenv
-import anthropic
+
 
 PAPER_DIR = "data/papers"
 

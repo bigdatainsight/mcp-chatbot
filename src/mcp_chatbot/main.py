@@ -8,7 +8,11 @@ async def cli():
     """Main function to run the chatbot."""
     # Example usage
     chatbot = MCP_Chatbot()
-    await chatbot.connect_to_server_and_run()
+    try:
+        await chatbot.connect_to_servers()
+        await chatbot.chat_loop()
+    finally:
+        await chatbot.cleanup()
 
 
 def main():
