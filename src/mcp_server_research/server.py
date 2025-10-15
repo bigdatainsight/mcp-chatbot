@@ -101,106 +101,100 @@ def extract_info(paper_id: str) -> str:
     return f"There's no saved information related to paper {paper_id}."
 
 
-toolList = [
-    {
-        "name": "search_papers",
-        "description": "Search for papers on arXiv based on a topic and store their information.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "topic": {
-                    "type": "string",
-                    "description": "The topic to search for"
-                },
-                "max_results": {
-                    "type": "integer",
-                    "description": "Maximum number of results to retrieve",
-                    "default": 5
-                }
-            },
-            "required": ["topic"]
-        }
-    },
-    {
-        "name": "extract_info",
-        "description": "Search for information about a specific paper across all topic directories.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "paper_id": {
-                    "type": "string",
-                    "description": "The ID of the paper to look for"
-                }
-            },
-            "required": ["paper_id"]
-        }
-    }
-]
+@mcp.resource("papers://folders")
+def get_available_folders() -> str:
+    """
+    List all available topic folders in the papers directory.
 
-toolList_gemini = {
-    "function_declarations": [
-        {
-            "name": "search_papers",
-            "description": "Search for papers on arXiv based on a topic and store their information.",
-            "parameters": {
-                "type": "OBJECT",
-                "properties": {
-                    "topic": {
-                        "type": "STRING",
-                        "description": "The topic to search for"
-                    },
-                    "max_results": {
-                        "type": "INTEGER",
-                        "description": "Maximum number of results to retrieve"
-                    }
-                },
-                "required": ["topic"]
-            }
-        },
-        {
-            "name": "extract_info",
-            "description": "Search for information about a specific paper across all topic directories.",
-            "parameters": {
-                "type": "OBJECT",
-                "properties": {
-                    "paper_id": {
-                        "type": "STRING",
-                        "description": "The ID of the paper to look for"
-                    }
-                },
-                "required": ["paper_id"]
-            }
-        }
-    ]
-}
+    This resource provides a simple list of all available topic folders.
+    """
+    folders = []
 
-mapping_tool_function = {
-    "search_papers": search_papers,
-    "extract_info": extract_info
-}
+    # Get all topic directories
+    if os.path.exists(PAPER_DIR):
+        for topic_dir in os.listdir(PAPER_DIR):
+            topic_path = os.path.join(PAPER_DIR, topic_dir)
+            if os.path.isdir(topic_path):
+                papers_file = os.path.join(topic_path, "papers_info.json")
+                if os.path.exists(papers_file):
+                    folders.append(topic_dir)
 
-
-def execute_tool(tool_name, tool_args):
-
-    result = mapping_tool_function[tool_name](**tool_args)
-
-    if result is None:
-        result = "The operation completed but didn't return any results."
-
-    elif isinstance(result, list):
-        result = ', '.join(result)
-
-    elif isinstance(result, dict):
-        # Convert dictionaries to formatted JSON strings
-        result = json.dumps(result, indent=2)
-
+    # Create a simple markdown list
+    content_parts = ["# Available Topics\n\n"]
+    if folders:
+        content_parts.extend([f"- {folder}\n" for folder in folders])
+        content_parts.append(
+            f"\nUse @{folders[-1]} to access papers in that topic.\n")
     else:
-        # For any other type, convert using str()
-        result = str(result)
-    return result
+        content_parts.append("No topics found.\n")
+
+    return ''.join(content_parts)
+
+
+@mcp.resource("papers://{topic}")
+def get_topic_papers(topic: str) -> str:
+    """
+    Get detailed information about papers on a specific topic.
+
+    Args:
+        topic: The research topic to retrieve papers for
+    """
+    topic_dir = topic.lower().replace(" ", "_")
+    papers_file = os.path.join(PAPER_DIR, topic_dir, "papers_info.json")
+
+    if not os.path.exists(papers_file):
+        return f"# No papers found for topic: {topic}\n\nTry searching for papers on this topic first."
+
+    try:
+        with open(papers_file, 'r') as f:
+            papers_data = json.load(f)
+
+        # Create markdown content with paper details
+        content_parts = [
+            f"# Papers on {topic.replace('_', ' ').title()}\n\n",
+            f"Total papers: {len(papers_data)}\n\n"
+        ]
+
+        for paper_id, paper_info in papers_data.items():
+            content_parts.extend([
+                f"## {paper_info['title']}\n",
+                f"- **Paper ID**: {paper_id}\n",
+                f"- **Authors**: {', '.join(paper_info['authors'])}\n",
+                f"- **Published**: {paper_info['published']}\n",
+                f"- **PDF URL**: [{paper_info['pdf_url']}]({paper_info['pdf_url']})\n\n",
+                f"### Summary\n{paper_info['summary'][:500]}...\n\n",
+                "---\n\n"
+            ])
+
+        return ''.join(content_parts)
+    except json.JSONDecodeError:
+        return f"# Error reading papers data for {topic}\n\nThe papers data file is corrupted."
+
+
+@mcp.prompt()
+def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
+    """Generate a prompt for Claude to find and discuss academic papers on a specific topic."""
+    return f"""Search for {num_papers} academic papers about '{topic}' using the search_papers tool. Follow these instructions:
+    1. First, search for papers using search_papers(topic='{topic}', max_results={num_papers})
+    2. For each paper found, extract and organize the following information:
+       - Paper title
+       - Authors
+       - Publication date
+       - Brief summary of the key findings
+       - Main contributions or innovations
+       - Methodologies used
+       - Relevance to the topic '{topic}'
+
+    3. Provide a comprehensive summary that includes:
+       - Overview of the current state of research in '{topic}'
+       - Common themes and trends across the papers
+       - Key research gaps or areas for future investigation
+       - Most impactful or influential papers in this area
+
+    4. Organize your findings in a clear, structured format with headings and bullet points for easy readability.
+
+    Please present both detailed information about each paper and a high-level synthesis of the research landscape in {topic}."""
 
 
 if __name__ == "__main__":
     mcp.run(transport='stdio')
-
-

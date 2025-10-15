@@ -22,12 +22,6 @@
             "args": [
                 "mcp-server-fetch"
             ]
-        },
-        "http-rquest": {
-            "command": "uvx",
-            "args": [
-                "mcp-rquest"
-            ]
         }
     }
 }
