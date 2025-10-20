@@ -7,6 +7,9 @@ A Model Context Protocol server that provides academic paper search and informat
 
 The server stores paper information in JSON format organized by search topics, allowing for efficient retrieval and cross-referencing of academic papers.
 
+> [!INFO]
+> This server runs on SSE (Server-Sent Events) transport on port 8001 by default, providing real-time communication capabilities.
+
 ### Available Tools
 
 - `search_papers` - Searches arXiv for papers on a given topic and stores their information locally.
@@ -24,7 +27,7 @@ The server stores paper information in JSON format organized by search topics, a
     - `topic` (string, required): Research topic to search for
     - `num_papers` (integer, optional): Number of papers to search for (default: 5)
   - Type `/prompts` to list all the available prompts
-  - Type `/prompt <prompt_name> <arguments>` to call a specific prompt
+  - Type `/prompt <name> <arg1=value1> <arg2=value2>` to call a specific prompt
 
 ### Resources
 
@@ -50,6 +53,8 @@ When using [`uv`](https://docs.astral.sh/uv/) from the project directory:
 uv run python -m mcp_server_research.server
 ```
 
+The server will start on `http://localhost:8001` using SSE transport.
+
 ### Using Python
 
 Alternatively you can run the server directly:
@@ -57,6 +62,8 @@ Alternatively you can run the server directly:
 ```
 python -m mcp_server_research.server
 ```
+
+The server will be available at `http://localhost:8001`.
 
 Make sure you have the required dependencies installed:
 
@@ -160,6 +167,10 @@ Optionally, you can add it to a file called `.vscode/mcp.json` in your workspace
 }
 ```
 </details>
+
+### Customization - Server Configuration
+
+The server runs on SSE transport by default on port 8001. You can modify the port by changing the `port` parameter in the FastMCP initialization.
 
 ### Customization - Data Storage
 
