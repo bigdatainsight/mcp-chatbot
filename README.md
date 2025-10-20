@@ -12,14 +12,6 @@ An AI-powered chatbot for searching and analyzing academic papers from arXiv. Th
 
 ## Supported LLM Providers
 
-### OpenAI
-- Models: GPT-4o-mini (default), GPT-4o, GPT-3.5-turbo
-- Uses OpenAI's function calling format
-
-### Anthropic Claude
-- Models: Claude-3-7-sonnet-20250219 (default), Claude-3-haiku, Claude-3-opus
-- Uses Anthropic's tool use format
-
 ### Google Gemini
 - Models: Gemini-1.5-flash (default), Gemini-1.5-pro, Gemini-2.5-flash
 - Uses Gemini's function declarations format
@@ -70,47 +62,20 @@ Example queries:
 - "Search for papers on quantum computing"
 - "Get information about paper 2301.12345"
 
-## MCP Server
-
-The `tools.py` file also functions as a **Model Context Protocol (MCP) server**, allowing the tools to be used by MCP-compatible clients.
-
-### Running the MCP Server
-
-To run and inspect the MCP server:
-
-```bash
-pkill -f "inspector" && sleep 2 && npx @modelcontextprotocol/inspector uv run python -m mcp_chatbot.tools
-```
-
-This will:
-- Start the MCP server
-- Open the MCP Inspector in your browser
-- Allow you to test the tools interactively
-- View tool schemas and responses
-
-## Available Tools
-
-### search_papers
-Searches arXiv for papers on a given topic and stores their information locally.
-
-**Parameters:**
-- `topic` (string): The research topic to search for
-- `max_results` (integer, optional): Maximum number of results (default: 5)
-
-### extract_info
-Retrieves detailed information about a specific paper by its arXiv ID.
-
-**Parameters:**
-- `paper_id` (string): The arXiv paper ID (e.g., "2301.12345")
-
 ## Development
 
-Run tests:
+### Generate requirements.txt
+```bash
+uv pip compile pyproject.toml --extra dev -o requirements.txt
+uv pip compile pyproject.toml --extra dev -o requirements.txt --generate-hashes
+```
+
+### Run tests
 ```bash
 uv run pytest -v
 ```
 
-Debug in VS Code:
+### Debug in VS Code
 1. Set breakpoints in the code
 2. Press F5 to start debugging
 3. Use the debug configuration in `.vscode/launch.json`
