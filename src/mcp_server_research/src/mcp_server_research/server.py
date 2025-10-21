@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 PAPER_DIR = "data/papers"
 
 # Initialize FastMCP server
-mcp = FastMCP("research", port=8001, stateless_http=True)
+mcp = FastMCP("research", port=8001, host="0.0.0.0", stateless_http=True)
 
 
 @mcp.tool()
@@ -196,5 +196,9 @@ def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
     Please present both detailed information about each paper and a high-level synthesis of the research landscape in {topic}."""
 
 
+def main():
+    """Main entry point for the MCP research server."""
+    mcp.run(transport='streamable-http')
+
 if __name__ == "__main__":
-    mcp.run(transport='streamable-http')  # stdio, streamable-http
+    main()
