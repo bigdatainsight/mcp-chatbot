@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 PAPER_DIR = "data/papers"
 
 # Initialize FastMCP server
-mcp = FastMCP("research")
+mcp = FastMCP("research", port=8001, stateless_http=True)
 
 
 @mcp.tool()
@@ -197,4 +197,4 @@ def generate_search_prompt(topic: str, num_papers: int = 5) -> str:
 
 
 if __name__ == "__main__":
-    mcp.run(transport='stdio')
+    mcp.run(transport='streamable-http')  # stdio, streamable-http

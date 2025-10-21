@@ -2,6 +2,7 @@ from contextlib import AsyncExitStack
 from dotenv import load_dotenv
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from mcp.client.streamable_http import streamablehttp_client
 from mcp.types import Tool as mcpTool
 from mcp.shared.exceptions import McpError
 from typing import List, TypedDict, Any, cast
@@ -250,20 +251,37 @@ class MCP_Chatbot:
     async def connect_to_server(self, server_name: str, server_config: dict) -> None:
         """Connect to a single MCP server."""
         try:
-            server_params = StdioServerParameters(**server_config)
-            stdio_transport = await self.exit_stack.enter_async_context(
-                stdio_client(server_params)
-            )
-            read, write = stdio_transport
-            session = await self.exit_stack.enter_async_context(
-                ClientSession(read, write)
-            )
+            # Check if this is an HTTP server
+            if "url" in server_config:
+                # HTTP connection using streamable HTTP
+                url = server_config["url"]
+                if not url.endswith("/mcp"):
+                    url = f"{url}/mcp"
+
+                http_transport = await self.exit_stack.enter_async_context(
+                    streamablehttp_client(url)
+                )
+                read, write, _ = http_transport
+                session = await self.exit_stack.enter_async_context(
+                    ClientSession(read, write)
+                )
+            else:
+                # Stdio connection
+                server_params = StdioServerParameters(**server_config)
+                stdio_transport = await self.exit_stack.enter_async_context(
+                    stdio_client(server_params)
+                )
+                read, write = stdio_transport
+                session = await self.exit_stack.enter_async_context(
+                    ClientSession(read, write)
+                )
+
             await session.initialize()
 
             # List available tools for this session
             response = await session.list_tools()
             tools = response.tools
-            print(f"\nConnected to {server_name} with tools:", [
+            print(f"\nConnected to {server_name} server with tools:", [
                   t.name for t in tools])
 
             for tool in tools:
@@ -281,6 +299,7 @@ class MCP_Chatbot:
                             "description": prompt.description,
                             "arguments": prompt.arguments
                         })
+                        print(f"  {server_name} supports prompt: {prompt.name}")
             except McpError as e:
                 if "Method not found" in str(e):
                     print(f"  {server_name} does not support prompts")
@@ -294,6 +313,8 @@ class MCP_Chatbot:
                     for resource in resources_response.resources:
                         resource_uri = str(resource.uri)
                         self.session_maps[resource_uri] = session
+                        print(
+                            f"  {server_name} supports resource: {resource_uri}")
             except McpError as e:
                 if "Method not found" in str(e):
                     print(f"  {server_name} does not support resources")

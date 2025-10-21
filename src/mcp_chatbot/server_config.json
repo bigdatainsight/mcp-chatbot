@@ -9,13 +9,7 @@
             ]
         },
         "research": {
-            "command": "uv",
-            "args": [
-                "run",
-                "python",
-                "-m",
-                "mcp_server_research.server"
-            ]
+            "url": "http://localhost:8001"
         },
         "fetch": {
             "command": "uvx",
